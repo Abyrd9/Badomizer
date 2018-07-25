@@ -54,9 +54,34 @@ tag App
 
 		<self>
 			<div>
-				<button :click=(do data:adminActive = !data:adminActive)> "Make stuff editable"
+				<div
+					:click=(do data:adminActive = !data:adminActive)
+					css:border="solid 3px #000"
+					css:backgroundRepeat="no-repeat"
+    			css:backgroundSize="contain"
+					css:backgroundImage="url('/images/edit.svg')"
+					css:width="64px"
+					css:height="64px"
+					css:position="fixed"
+					css:bottom="5px"
+					css:right="5px"
+				>
+					""
+
 				if data:adminActive
-					<button :click="save"> "Save"
+					<div
+						:click="save"
+						css:border="solid 3px #000"
+						css:backgroundRepeat="no-repeat"
+						css:backgroundSize="contain"
+						css:backgroundImage="url('/images/save.svg')"
+						css:width="64px"
+						css:height="64px"
+						css:position="fixed"
+						css:bottom="78px"
+						css:right="5px"
+					>
+						""
 
 tag Editable
 	prop node
