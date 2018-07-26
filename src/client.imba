@@ -4,6 +4,7 @@ import {Admin} from "./admin/admin"
 
 var store = {
 	adminActive: false
+	sidebarVisible: false
 	contents: {}
 }
 

@@ -1,12 +1,47 @@
-import {COLLECTION} from "../constants"
-import {DB} from "../database/db"
+import {AdminButtons} from "./admin-buttons"
+import {Sidebar} from "./sidebar"
 
 export tag Admin
-	def build
-		@db = DB.new
-
 	def create_styles
 		var styles = document.getElementById "ignite-styles"
+		var defaultStyles = document.getElementById "badomizer-base-styles"
+
+		# Add the base styles
+		if !defaultStyles
+			var css = '
+				.sidebar {
+					height: 100%;
+					width: 160px;
+					position: fixed;
+					z-index: 1;
+					top: 0;
+					right: -200px;
+					background-color: #FFF;
+					overflow-x: hidden;
+					padding: 20px;
+				}
+
+				.admin-buttons {
+					position: fixed;
+					bottom: 5px;
+					right: 5px;
+				}
+				.admin-button {
+					border: solid 3px #000;
+					background-repeat: no-repeat;
+					background-size: contain;
+					width: 64px;
+					height: 64px;
+					margin: 3px;
+				}
+			'
+			var head = document:head
+			var style = document.createElement('style')
+
+			style:id = "badomizer-base-styles"
+			style:type = "text/css"
+			style.appendChild(document.createTextNode(css))
+			head.appendChild(style)
 
 		# If styles are active remove them
 		if styles && !data:adminActive
@@ -18,6 +53,21 @@ export tag Admin
 				border: dashed 2px;
 				box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
 			}
+
+			.sidebar-visible {
+				transform: translateX(-200px);
+			}
+
+			.remove {
+				position: absolute;
+				top: 5px;
+				right: 5px;
+				width: 24px;
+				height: 24px;
+				background-repeat: no-repeat;
+				background-size: contain;
+				background-image: url("/images/remove.svg");
+			}
 			'
 			var head = document:head
 			var style = document.createElement('style')
@@ -27,68 +77,10 @@ export tag Admin
 			style.appendChild(document.createTextNode(css))
 			head.appendChild(style)
 
-	def save
-		# Grab all the contents and their ids
-		var mounts = document.querySelectorAll("[data-editable]");
-
-		var items = []
-		for mount in mounts
-			# do a small diff
-			if data:contents[id] != mount:innerHTML
-				items.push({
-					id: mount:dataset:contentId
-					content: mount:innerHTML
-				})
-
-		try
-			await @db.batch_insert COLLECTION, items
-		catch e
-			console.log e
-
-		data:adminActive = false
-
 	def render
 		create_styles
 
 		<self>
 			<div>
-				<div
-					:click=(do data:adminActive = !data:adminActive)
-					css:border="solid 3px #000"
-					css:backgroundRepeat="no-repeat"
-    			css:backgroundSize="contain"
-					css:backgroundImage="url('/images/edit.svg')"
-					css:width="64px"
-					css:height="64px"
-					css:position="fixed"
-					css:bottom="5px"
-					css:right="5px"
-				>
-					""
-
-				if data:adminActive
-					<div
-						css:border="solid 3px #000"
-						css:backgroundRepeat="no-repeat"
-						css:backgroundSize="contain"
-						css:backgroundImage="url('/images/revision.svg')"
-						css:width="64px"
-						css:height="64px"
-						css:position="fixed"
-						css:bottom="151px"
-						css:right="5px"
-					>
-						""
-					<div
-						:click="save"
-						css:border="solid 3px #000"
-						css:backgroundRepeat="no-repeat"
-						css:backgroundSize="contain"
-						css:backgroundImage="url('/images/save.svg')"
-						css:width="64px"
-						css:height="64px"
-						css:position="fixed"
-						css:bottom="78px"
-						css:right="5px"
-					>
-						""
+				<Sidebar[data]>
+				<AdminButtons[data]>
