@@ -20,13 +20,37 @@ export class DB
   def initialize
     @db = db
 
-  def batch_insert collection, items
+  def insert collection, id, item
+    @db.collection(collection).doc(id).set(item)
+
+  def batch_insert collection, revision, items
     var batch = @db.batch()
-
-    for item in items
-      batch.set(@db.collection(collection).doc(item:id), item)
-
+    batch.set(@db.collection(collection).doc(revision), { content: items })
     batch.commit()
 
   def get collection, id
     @db.collection(collection).doc(id).get()
+
+  # Returns the collection as the pathname of the current page
+  def get_page_collection
+    window:location:pathname.replace("/", "_")
+
+  def get_revisions page
+    var querySnapshot = await @db.collection(page).get()
+
+    if querySnapshot:size > 0
+      var items = []
+      querySnapshot.forEach do |doc|
+        items.push doc.data
+
+      items
+    else
+      []
+
+  def format_contents contents
+    if contents && contents:contents && contents:contents:length
+      contents:contents.reduce do |content, acc|
+        acc[content:id] = content
+      , {}
+    else
+      {}

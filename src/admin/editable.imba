@@ -1,4 +1,3 @@
-import {COLLECTION} from "../constants"
 import {DB} from "../database/db"
 
 export tag Editable
@@ -16,11 +15,9 @@ export tag Editable
 
 		# Grab the inner html for this editable and replace it
 		try
-			var contents = await @db.get COLLECTION, @id
-			var results = contents.data()
-
-			if results && results:content
-				@new_node:innerHTML = results:content
+			var contents = data:contents[@id]
+			if contents
+				@new_node:innerHTML = contents:content
 		catch e
 			console.log e
 

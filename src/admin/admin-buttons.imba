@@ -1,4 +1,3 @@
-import {COLLECTION} from "../constants"
 import {DB} from "../database/db"
 
 export tag AdminButtons
@@ -14,15 +13,18 @@ export tag AdminButtons
 
     var items = []
     for mount in mounts
-      # do a small diff
-      if data:contents[id] != mount:innerHTML
-        items.push({
-          id: mount:dataset:contentId
-          content: mount:innerHTML
-        })
+      items.push({
+        id: mount:dataset:contentId
+        content: mount:innerHTML
+      })
 
     try
-      await @db.batch_insert COLLECTION, items
+      var revisions = "1"
+      if data:revisions && data:revisions:length
+        revisions = (data:revisions:length + 1).toString
+      # Insert the revision number and change active to this new revision
+      await @db.insert @db.get_page_collection, revisions, { content: items, id: revisions, date: Date.new }
+      await @db.insert @db.get_page_collection, "active", { content: items, id: "active", data: Date.new }
     catch e
       console.log e
 
@@ -32,6 +34,10 @@ export tag AdminButtons
     <self>
       <div.admin-buttons>
         if data:adminActive
+          <div.admin-button
+            css:backgroundImage="url('/images/publish.svg')"
+          >
+            ""
           <div.admin-button
             :click="toggle_sidebar"
             css:backgroundImage="url('/images/revision.svg')"
