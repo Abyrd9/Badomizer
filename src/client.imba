@@ -2,6 +2,7 @@ import {DB} from "./database/db"
 import {to_object} from "./util"
 import {Editable} from "./admin/editable"
 import {Admin} from "./admin/admin"
+import "./style.scss"
 
 var store = {
 	adminActive: false
