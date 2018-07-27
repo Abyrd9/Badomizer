@@ -15,6 +15,18 @@ const config = {
           fallback: "style-loader",
           use: ['css-loader', 'postcss-loader', 'sass-loader'],
         })
+			},
+			{
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          "file-loader",
+          {
+            loader: "image-webpack-loader",
+            options: {
+              bypassOnDebug: true
+            }
+          }
+        ]
       },
 		]
 	},

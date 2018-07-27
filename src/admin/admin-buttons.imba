@@ -34,22 +34,12 @@ export tag AdminButtons
     <self>
       <div.admin-buttons>
         if data:adminActive
-          <div.admin-button
-            css:backgroundImage="url('/images/publish.svg')"
-          >
-            ""
-          <div.admin-button
-            :click="toggle_sidebar"
-            css:backgroundImage="url('/images/revision.svg')"
-          >
-            ""
-          <div.admin-button
-            :click="save"
-            css:backgroundImage="url('/images/save.svg')"
-          >
-            ""
-        <div.admin-button
-          :click=(do data:adminActive = !data:adminActive)
-          css:backgroundImage="url('/images/edit.svg')"
-        >
-          ""
+          <button.admin-buttons__button .button-active=data:adminActive>
+            <i.fas .fa-upload .admin-buttons__button__icon>
+          <button.admin-buttons__button .button-active=data:adminActive :click="toggle_sidebar">
+            <i.fas .fa-sync-alt .admin-buttons__button__icon>
+          <button.admin-buttons__button .button-active=data:adminActive :click="save">
+            <i.fas .fa-save .admin-buttons__button__icon>
+        <button.admin-buttons__toggle-button .toggle-button-active=data:adminActive :click=(do data:adminActive = !data:adminActive)>
+          <i.fas .fa-pencil-alt .admin-buttons__toggle-button__icon .icon-pencil>
+          <i.fas .fa-times .admin-buttons__toggle-button__icon .icon-times>

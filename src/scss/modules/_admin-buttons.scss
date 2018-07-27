@@ -1,0 +1,65 @@
+.admin-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  &__button {
+    background-color: #3A6EA5;
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    margin: 5px;
+    &__icon {
+      color: #fff;
+      font-size: 18px;
+    }
+  }
+  &__toggle-button {
+    border: none;
+    background-color: #004E98;
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    @include shadow(2);
+    position: relative;
+    margin-top: 5px;
+    &__icon {
+      color: #fff;
+      position: absolute;
+      top: calc(50% - 15px);
+      left: calc(50% - 15px);
+      font-size: 24px;
+      height: 30px;
+      width: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity .2s cubic-bezier(.4, 0, .6, 1), transform .2s cubic-bezier(.4, 0, .6, 1);
+    }
+  }
+  .toggle-button-active {
+    .icon-pencil {
+      opacity: 0;
+      transform: rotate(-180deg);
+    }
+    .icon-times {
+      opacity: 1;
+      transform: rotate(0);
+    }
+  }
+  .icon-pencil {
+    opacity: 1;
+    transform: rotate(0);
+  }
+  .icon-times {
+    opacity: 0;
+    transform: rotate(180deg);
+  }
+}
+
+@for $i from 1 through 3 {
+  .button-active {
+    transition: opacity .#{1 + $i}s cubic-bezier(.4, 0, .6, 1);
+  }
+}
