@@ -3,7 +3,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 10px;
+	margin: 10px;
+	position: fixed;
+	bottom: 5px;
+	right: 5px;
   &__button {
 		border: none;
     background-color: #3A6EA5;
@@ -15,6 +18,9 @@
 		opacity: 0;
 		transform: translateY(12px);
 		transition: opacity .2s cubic-bezier(.4, 0, .6, 1), transform .2s cubic-bezier(.4, 0, .6, 1);
+		&:active, &:focus {
+			outline: none;
+		}
     &__icon {
       color: #fff;
       font-size: 18px;

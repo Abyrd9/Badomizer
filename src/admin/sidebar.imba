@@ -19,14 +19,11 @@ export tag Sidebar
 
   def render
     <self>
-      <div.sidebar.sidebar-visible=data:sidebarVisible>
-        <div.remove :click=(do data:sidebarVisible = false)>
-
-        <select[data:selectedRevision]>
-          <option>
+      <div.sidebar .visible=data:sidebarVisible>
+        <i.fas .fa-times .sidebar__close-icon :click=(do data:sidebarVisible = false)>
+        <select[data:selectedRevision] .sidebar__select>
+          <option.sidebar__select__option> "Revision Date"
           for revision in data:revisions
             <option value=revision:id>
               "{revision:id}-{format_date revision:date:seconds}"
-
-        <div>
-          <button :click="make_active"> "Make Active"
+        <button.sidebar__button :click="make_active"> "Make Active"
