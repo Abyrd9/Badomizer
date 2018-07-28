@@ -33,7 +33,7 @@ export tag AdminButtons
   def render
     <self>
       <div.admin-buttons>
-        if data:adminActive
+        if true
           <button.admin-buttons__button .button-active=data:adminActive>
             <i.fas .fa-upload .admin-buttons__button__icon>
           <button.admin-buttons__button .button-active=data:adminActive :click="toggle_sidebar">
